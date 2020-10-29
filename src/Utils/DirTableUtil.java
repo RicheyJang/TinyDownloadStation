@@ -117,11 +117,21 @@ public class DirTableUtil {
             "        <tbody>";
     private static String endBody="</tbody>\n" +
             "    </table>\n" +
+            "    <footer id=\"footer\" style=\"font-size: 11px\">\n" +
+            "        <br><br><br><br><br>\n" +
+            "        <div class=\"container\">\n" +
+            "          <span>\n" +
+            "                <a href=\"https://github.com/RicheyJang/TinyDownloadStation\" target=\"_blank\" style=\"color: inherit; font-weight: normal; text-decoration: none;\">Author: RicheyJang</a>\n" +
+            "                <br>© 2020 TinyDownloadStation Project. All Rights Reserved.\n" +
+            "            </span>\n" +
+            "        </div>\n" +
+            "    </footer>" +
             "</div>\n" +
             "</body>";
     private static String endLine="</html>";
 
     static {
         preBody=encode(preBody);
+        endBody=encode(endBody);
     }
 }

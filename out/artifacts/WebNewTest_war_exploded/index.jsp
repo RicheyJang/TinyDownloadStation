@@ -30,5 +30,14 @@
     <div style="text-align:center">
       <a href="download/" class="btn btn-primary">下载站</a>
     </div>
+
+    <footer class="navbar-fixed-bottom" style="font-size: 11px">
+      <div class="container">
+          <span>
+                <a href="https://github.com/RicheyJang/TinyDownloadStation" target="_blank" style="color: inherit; font-weight: normal; text-decoration: none;">Author: RicheyJang</a>
+                <br>© 2020 TinyDownloadStation Project. All Rights Reserved.
+            </span>
+      </div>
+    </footer>
   </body>
 </html>
