@@ -10,7 +10,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
-@WebServlet(name = "IndexServlet")
+@WebServlet(name = "DownloaderServlet")
 public class DownloaderServlet extends HttpServlet {
     private static String rootPath="/";
     private static String uriBegin="download";
@@ -18,39 +18,61 @@ public class DownloaderServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
+        BufferedReader br=null;
         try {
             Properties prop = System.getProperties();
             String os = prop.getProperty("os.name");
-            int stIndex=0;
+            int stIndex = 0;
             //判断系统是否为WINDOWS
             if (os != null && os.toLowerCase().contains("win")) {
-                stIndex=1;
+                stIndex = 1;
             }
             String path = DownloaderServlet.class.getResource("/").getPath();
             path = path.substring(stIndex, path.indexOf("classes"));
             //读取配置文件
-            File file=new File(path + "configs.properties");
-            System.out.println("config path: "+file.getAbsolutePath());
+            File file = new File(path + "configs.properties");
+            System.out.println("config path: " + file.getAbsolutePath());
 
             Properties pps = new Properties();
             pps.load(new FileInputStream(file));
-            //读取下载地址根目录
-            String nowPath=pps.getProperty("rootpath");
-            if(nowPath!=null && nowPath.length()>0){
-                rootPath=nowPath;
-                if(rootPath.endsWith("\\") || rootPath.endsWith("/"))
-                    rootPath=rootPath.substring(0,rootPath.length()-1);
-                System.out.println("root path : "+rootPath);
+            //读取下载地址根目录root path
+            String nowPath = pps.getProperty("rootpath");
+            if (nowPath != null && nowPath.length() > 0) {
+                rootPath = nowPath;
+                if (rootPath.endsWith("\\") || rootPath.endsWith("/"))
+                    rootPath = rootPath.substring(0, rootPath.length() - 1);
+                System.out.println("root path : " + rootPath);
+            }
+            //转换字符集
+            uriBegin = DirTableUtil.encode(uriBegin);
+            rootPath = DirTableUtil.encode(rootPath);
+            //读取下载界面HTML
+            StringBuffer downloadCons = new StringBuffer();
+            File df = new File(path + "download.html");
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(df), StandardCharsets.UTF_8));
+            String downloads = "";
+            while ((downloads = br.readLine()) != null) {
+                downloadCons.append(downloads).append("\n");
+            }
+            downloads=downloadCons.toString();
+            int index=downloads.indexOf("{[WorkTable]}");
+            if(index<0){
+                System.out.println("ERROR: Work Table not found.");
+            }
+            else{
+                DirTableUtil.setPreBody(downloads.substring(0,index));
+                DirTableUtil.setEndBody(downloads.substring(index+13));
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        try {
-            //转换字符集
-            uriBegin=new String(uriBegin.getBytes(StandardCharsets.UTF_8),"ISO8859-1");
-            rootPath=new String(rootPath.getBytes(StandardCharsets.UTF_8),"ISO8859-1");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

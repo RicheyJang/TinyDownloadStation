@@ -9,9 +9,6 @@ public class DirTableUtil {
     public static String buildBody(File[] files,String preURI)
     {
         StringBuffer res=new StringBuffer("");
-
-        res.append(preLine);
-        res.append(header);
         res.append(preBody);
 
         try {
@@ -25,9 +22,8 @@ public class DirTableUtil {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        res.append(endBody);
-        res.append(endLine);
 
+        res.append(endBody);
         return res.toString();
     }
 
@@ -73,65 +69,17 @@ public class DirTableUtil {
     public static String encode(String s)
     {
         String afs=s;
-        try {
-            afs=new String(s.getBytes(StandardCharsets.UTF_8), "ISO8859-1");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        afs=new String(s.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
         return afs;
     }
 
-    //HTML
-    private static String preLine="<!DOCTYPE html>\n" +
-            "<html lang=\"en\">";
-    private static String header="<head>\n" +
-            "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-            "    <meta charset=\"UTF-8\">\n" +
-            "    <title>Download</title>\n" +
-            "    <link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css\" integrity=\"sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u\" crossorigin=\"anonymous\">\n" +
-            "    <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js\" integrity=\"sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa\" crossorigin=\"anonymous\"></script>\n" +
-            "    <style>\n" +
-            "        body{\n" +
-            "            padding-top: 50px;\n" +
-            "            font-size: 18px;\n" +
-            "        }\n" +
-            "        .strter{\n" +
-            "            padding: 20px 15px;\n" +
-            "            text-align: center;\n" +
-            "        }\n" +
-            "    </style>\n" +
-            "</head>";
-    private static String preBody="<body>\n" +
-            "<div class=\"container\">\n" +
-            "    <a class=\"navbar-brand\">\n" +
-            "        <span>下载站</span>\n" +
-            "    </a>\n" +
-            "    <table id=\"list\" class=\"table\">\n" +
-            "        <thead>\n" +
-            "        <tr>\n" +
-            "            <th style=\"width:55%\"><a href=\"?C=N&amp;O=A\">File Name</a>&nbsp;</th>\n" +
-            "            <th style=\"width:20%\"><a href=\"?C=S&amp;O=A\">File Size</a>&nbsp;</th>\n" +
-            "            <th style=\"width:25%\"><a href=\"?C=M&amp;O=A\">Date</a>&nbsp;</th>\n" +
-            "        </tr>\n" +
-            "        </thead>\n" +
-            "        <tbody>";
-    private static String endBody="</tbody>\n" +
-            "    </table>\n" +
-            "    <footer id=\"footer\" style=\"font-size: 11px\">\n" +
-            "        <br><br><br><br><br>\n" +
-            "        <div class=\"container\">\n" +
-            "          <span>\n" +
-            "                <a href=\"https://github.com/RicheyJang/TinyDownloadStation\" target=\"_blank\" style=\"color: inherit; font-weight: normal; text-decoration: none;\">Author: RicheyJang</a>\n" +
-            "                <br>© 2020 TinyDownloadStation Project. All Rights Reserved.\n" +
-            "            </span>\n" +
-            "        </div>\n" +
-            "    </footer>" +
-            "</div>\n" +
-            "</body>";
-    private static String endLine="</html>";
-
-    static {
-        preBody=encode(preBody);
-        endBody=encode(endBody);
+    public static void setPreBody(String preBody) {
+        DirTableUtil.preBody = encode(preBody);
     }
+    public static void setEndBody(String endBody) {
+        DirTableUtil.endBody = encode(endBody);
+    }
+    //HTML
+    private static String preBody;
+    private static String endBody;
 }
