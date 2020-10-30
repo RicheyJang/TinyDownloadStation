@@ -11,3 +11,17 @@
 ````
 3. 配置web/WEB-INF/configs.properties中的rootpath项，填写下载文件存放的根目录
 4. 启动Tomcat
+
+### 截图
+主页面：
+
+![Image text](https://github.com/RicheyJang/TinyDownloadStation/blob/master/picture/index.png)
+
+可以通过修改web/index.jsp来自行定制(v0.1)
+
+---
+下载目录页面：
+
+![Image text](https://github.com/RicheyJang/TinyDownloadStation/blob/master/picture/inner.png)
+
+可以通过修改web/index.jsp来自行定制(v0.2)
