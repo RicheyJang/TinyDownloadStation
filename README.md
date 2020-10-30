@@ -24,4 +24,4 @@
 
 ![Image text](https://github.com/RicheyJang/TinyDownloadStation/blob/master/picture/inner.png)
 
-可以通过修改web/index.jsp来自行定制(v0.2)
+可以通过修改web/WEB-INF/download.html来自行定制(v0.2)
